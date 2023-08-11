@@ -1,4 +1,5 @@
-const resultModel = require('../Module/resultModel')
+const resultModel = require('../Module/resultModel');
+const { search } = require('../routes');
 
 exports.addResult = async (req, res) => {
     try {
@@ -145,3 +146,14 @@ exports.deleteResult = async(req,res) => {
         })
     }
 }
+
+exports.searchResult = async(req,res) => {
+
+    var search = req.query.search;
+    var regex = new RegExp(search,"i");
+    var data = await resultModel.find({name:{$regex:regex}})
+    res.status(200).json({
+        status: "Add search Result Found Successfully",
+        data
+    })
+} 
